@@ -10,8 +10,8 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
     nginx.ingress.kubernetes.io/proxy-buffer-size: 512k
     nginx.ingress.kubernetes.io/client-body-buffer-size: 512k
-    # ingress.kubernetes.io/ssl-redirect: "true"
-    # ingress.kubernetes.io/force-ssl-redirect: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
@@ -25,7 +25,7 @@ spec:
             name: httpserver-service
             port:
               number: 8080  
-  # tls:
-  # - hosts:
-  #   - noel.srenantong.site
-  #   secretName: tls-secret-srenantong-site
+  tls:
+  - hosts:
+    - noel.srenantong.site
+    secretName: tls-secret-srenantong-site
