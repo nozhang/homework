@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-proxy-noel-test
+  namespace: noel-test
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-buffer-size: 512k
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 512k
+    # ingress.kubernetes.io/ssl-redirect: "true"
+    # ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: noel.srenantong.site
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: httpserver-service
+            port:
+              number: 8080  
+  # tls:
+  # - hosts:
+  #   - noel.srenantong.site
+  #   secretName: tls-secret-srenantong-site
