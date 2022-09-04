@@ -5,7 +5,8 @@
 # 🏗 File Description:
 ## module2
 * 编写一个 HTTP 服务器
-## module4
-* The ssl key is applying, pls check following URL
+## module8
+* Kubernetes manifest in folder manifest.
+* The ssl key is applying, pls check following URL.
 * https://noel.srenantong.site/healthz
 * https://noel.srenantong.site/headers
