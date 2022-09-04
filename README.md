@@ -6,7 +6,8 @@
 ## module2
 * 编写一个 HTTP 服务器
 ## module8
-* Kubernetes manifest in folder manifest.
-* The ssl key is applying, pls check following URL.
+* Kubernetes based on Google GKE.
+* Kubernetes [manifest](https://github.com/nozhang/homework/tree/master/manifests)
+* The SSL certificate application still in progress. So you'll see certificate invalued when access with https.
 * https://noel.srenantong.site/healthz
 * https://noel.srenantong.site/headers
