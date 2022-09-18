@@ -11,3 +11,6 @@
 * The SSL certificate store in gcp secret manager. 
 * https://noel.srenantong.site/healthz
 * https://noel.srenantong.site/headers
+## Module10
+* Grafana [URL](https://grafana.srenantong.site)
+* Grafana user:admin passwd:oPAJx4kU23pJ18yURndSbzy7fgD9imQFVLoMj0q3

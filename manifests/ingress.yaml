@@ -24,8 +24,21 @@ spec:
           service:
             name: httpserver-service
             port:
-              number: 8080  
+              number: 8080
+  - host: grafana.srenantong.site
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pool-au-grafana
+            port:
+              number: 80
   tls:
   - hosts:
     - noel.srenantong.site
     secretName: tls-secret-srenantong-site
+  - hosts:
+    - grafana.srenantong.site
+    secretName: tls-secret-grafana-site

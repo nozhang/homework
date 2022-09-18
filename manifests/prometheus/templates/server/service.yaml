@@ -1,0 +1,25 @@
+---
+# Source: prometheus/templates/server/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: "server"
+    app: prometheus
+    release: pool-au
+    chart: prometheus-15.12.2
+    heritage: Helm
+  name: pool-au-prometheus-server
+  namespace: noel-test
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 9090
+  selector:
+    component: "server"
+    app: prometheus
+    release: pool-au
+  sessionAffinity: None
+  type: "ClusterIP"

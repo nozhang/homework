@@ -1,0 +1,24 @@
+---
+# Source: prometheus/templates/alertmanager/cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    component: "alertmanager"
+    app: prometheus
+    release: pool-au
+    chart: prometheus-15.12.2
+    heritage: Helm
+  name: pool-au-prometheus-alertmanager
+  namespace: noel-test
+data:
+  allow-snippet-annotations: "false"
+  alertmanager.yml: |
+    global: {}
+    receivers:
+    - name: default-receiver
+    route:
+      group_interval: 5m
+      group_wait: 10s
+      receiver: default-receiver
+      repeat_interval: 3h
