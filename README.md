@@ -19,5 +19,5 @@ kubectl apply -f ./grafana --recursive
 ```
 * Grafana [URL](https://grafana.srenantong.site)
 * https://noel.srenantong.site/metrics
-* Screenshots ![image](https://github.com/nozhang/homework/blob/master/images/grafana-screenshot.png)
-![image]((https://github.com/nozhang/homework/blob/master/images/pre-screenshot.png)
+* Screenshots Grafana ![image](https://github.com/nozhang/homework/blob/master/images/grafana-screenshot.png)
+              Prometheus ![image]((https://github.com/nozhang/homework/blob/master/images/pre-screenshot.png)
