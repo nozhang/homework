@@ -1,65 +1,85 @@
-// 编写一个 HTTP 服务器，大家视个人不同情况决定完成到哪个环节，但尽量把 1 都做完：
-
-// 接收客户端 request，并将 request 中带的 header 写入 response header
-// 读取当前系统的环境变量中的 VERSION 配置，并写入 response header
-// Server 端记录访问日志包括客户端 IP，HTTP 返回码，输出到 server 端的标准输出
-// 当访问 localhost/healthz 时，应返回 200
-
 package main
 
 import (
+	"context"
+	"flag"
 	"fmt"
 	"io"
-	"log"
+	"math/rand"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
-	"strconv"
-	"strings"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"github.com/golang/glog"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
+	"homework/metrics"
 )
 
 func main() {
-	http.HandleFunc("/headers", headers)
-	http.HandleFunc("/healthz", healthz)
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		log.Fatal(err)
+	flag.Set("v", "4")
+	glog.V(2).Info("Starting http server...")
+	metrics.Register()
+
+	mux := http.NewServeMux()
+	mux.HandleFunc("/hello", rootHandler)
+	mux.HandleFunc("/healthz", healthz)
+	mux.Handle("/metrics", promhttp.Handler())
+
+	srv := http.Server{
+		Addr:    ":8080",
+		Handler: mux,
 	}
-}
+	done := make(chan os.Signal, 1)
+	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
-func headers(response http.ResponseWriter, request *http.Request) {
-
-	//question1
-	headers := request.Header
-	for header := range headers {
-		values := headers[header]
-		//fmt.Println(values)
-		for index, _ := range values {
-			values[index] = strings.TrimSpace(values[index])
+	go func() {
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			glog.Fatalf("listen: %s\n", err)
 		}
-		response.Header().Set(header, strings.Join(values, ","))
+	}()
+	glog.Info("Server Started")
+	<-done
+	glog.Info("Server Stopped")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer func() {
+		// extra handling here
+		cancel()
+	}()
+
+	if err := srv.Shutdown(ctx); err != nil {
+		glog.Fatalf("Server Shutdown Failed:%+v", err)
 	}
-
-	//question 2
-	os.Setenv("VERSION", "go1.18.3")
-	version := os.Getenv("VERSION")
-	response.Header().Set("VERSION-GO", version)
-
-	//question 3
-	ipPort := request.RemoteAddr
-	println("Client->ip:port=" + ipPort)
-	ip := strings.Split(ipPort, ":")
-	println("Client->ip=" + ip[0])
-	println("Client->response code=" + strconv.Itoa(http.StatusOK))
-
-	io.WriteString(response, "================Details of the http response header:============\n")
-	for k, v := range response.Header() {
-		io.WriteString(response, fmt.Sprintf("%s=%s\n", k, v))
-	}
-
+	glog.Info("Server Exited Properly")
 }
 
-//question 4
 func healthz(w http.ResponseWriter, r *http.Request) {
-	HealthzCode := "200"
-	w.Write([]byte(HealthzCode))
+	io.WriteString(w, "ok\n")
+}
+
+func randInt(min int, max int) int {
+	rand.Seed(time.Now().UTC().UnixNano())
+	return min + rand.Intn(max-min)
+}
+
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	glog.V(4).Info("entering root handler")
+	timer := metrics.NewTimer()
+	defer timer.ObserveTotal()
+	user := r.URL.Query().Get("user")
+	delay := randInt(10, 2000)
+	time.Sleep(time.Millisecond * time.Duration(delay))
+	if user != "" {
+		io.WriteString(w, fmt.Sprintf("hello [%s]\n", user))
+	} else {
+		io.WriteString(w, "hello [stranger]\n")
+	}
+	io.WriteString(w, "===================Details of the http request header:============\n")
+	for k, v := range r.Header {
+		io.WriteString(w, fmt.Sprintf("%s=%s\n", k, v))
+	}
+	glog.V(4).Infof("Respond in %d ms", delay)
 }

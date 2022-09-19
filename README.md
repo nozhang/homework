@@ -12,4 +12,12 @@
 * https://noel.srenantong.site/healthz
 * https://noel.srenantong.site/headers
 ## Module10
+```Bash
+helm install -f values.yaml kube-prometheus-stack prometheus-community/kube-prometheus-stack
+helm template grafana/grafana --output-dir ./
+kubectl apply -f ./grafana --recursive
+```
 * Grafana [URL](https://grafana.srenantong.site)
+* https://noel.srenantong.site/metrics
+* Screenshots ![image](https://github.com/nozhang/homework/images/grafana-screenshot.png)
+![image](https://github.com/nozhang/homework/images/pre-screenshot.png)
