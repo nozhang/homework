@@ -14,14 +14,17 @@ spec:
     metadata:
       labels:
         app: httpserver
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
     spec:
       containers:
       - name: httpserver
-        image: asia.gcr.io/SENSITIVE/noel-test:1.1
+        image: asia.gcr.io/devops-apac-mgmt/noel-test:1.2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
-          name: http
+          name: http-web
         livenessProbe:
           failureThreshold: 5
           httpGet:
