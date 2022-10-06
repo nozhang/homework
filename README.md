@@ -7,7 +7,7 @@
 * 编写一个 HTTP 服务器
 ## Module8
 * Kubernetes based on Google GKE.
-* Kubernetes [manifest](https://github.com/nozhang/homework/tree/master/manifests)
+* [manifest](https://github.com/nozhang/homework/tree/master/manifests)
 * The SSL certificate store in gcp secret manager. 
 * https://noel.srenantong.site/healthz
 * https://noel.srenantong.site/metrics
@@ -37,6 +37,7 @@ kubectl apply -f httpserver.yaml
 kubectl apply -f external-secrets.yaml
 kubectl apply -f istio-specs.yaml
 ```
-warning istio on GKE update [firewall](https://istio.io/latest/docs/setup/platform-setup/gke/?_ga=2.20382525.448473504.1665058722-1985876561.1665058722#:~:text=For%20private%20GKE%20clusters)
+* [Manifest](https://github.com/nozhang/homework/tree/master/istio)
+* :warning: Istio on GKE should update [firewall](https://istio.io/latest/docs/setup/platform-setup/gke/?_ga=2.20382525.448473504.1665058722-1985876561.1665058722#:~:text=For%20private%20GKE%20clusters)
 * https://httpsserver.srenantong.site/healthz
 * https://httpsserver.srenantong.site/metrics
