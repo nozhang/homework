@@ -26,11 +26,11 @@
 helm install -f values.yaml kube-prometheus-stack prometheus-community/kube-prometheus-stack
 helm template grafana/grafana --output-dir ./
 kubectl apply -f ./grafana --recursive
-```Module2
+```
 * Grafana [URL](https://grafana.srenantong.site)
 * https://noel.srenantong.site/metrics
 * Screenshots Grafana ![image](https://github.com/nozhang/homework/blob/master/images/grafana-screenshot.png)
-              Prometheus ![image](https://github.com/nozhang/homework/blob/master/images/pre-screenshot.png)
+            Prometheus ![image](https://github.com/nozhang/homework/blob/master/images/pre-screenshot.png)
 </details>
 
 <details>
