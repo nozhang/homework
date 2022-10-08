@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: httpserver
-        image: asia.gcr.io/devops-apac-mgmt/noel-test:1.2
+        image: asia.gcr.io/SENSITIVE/noel-test:1.2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080

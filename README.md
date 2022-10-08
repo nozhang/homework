@@ -29,6 +29,11 @@ cd istio-1.15.1
 cp bin/istioctl /usr/local/bin
 istioctl install --set profile=demo -y
 ```
+### Install Jaeger
+```Bash
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.15/samples/addons/jaeger.yaml
+istioctl dashboard jaeger
+```
 ### Deploy httpserver
 ```Bash
 kubectl apply -f namespace.yaml
@@ -41,3 +46,4 @@ kubectl apply -f istio-specs.yaml
 * :warning: Istio on GKE should update [firewall](https://istio.io/latest/docs/setup/platform-setup/gke/?_ga=2.20382525.448473504.1665058722-1985876561.1665058722#:~:text=For%20private%20GKE%20clusters)
 * https://httpsserver.srenantong.site/healthz
 * https://httpsserver.srenantong.site/metrics
+* Screenshots Jaeger-tracing ![image](https://github.com/nozhang/homework/blob/master/images/jaeger-tracing.png)
