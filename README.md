@@ -1,8 +1,8 @@
-# My Info 1.1.0
-* name： noel.zhang
+## :student: My Info
+* name：张洪宇（noel.zhang）
 * num：G20220797070069
 
-# :writing_hand: Homework Modules:
+## :writing_hand: Homework Modules:
 <details>
   <summary>Module 2</summary>
 
